@@ -81,63 +81,27 @@ Let’s take a look at the data. The `seqdata` file contains information about g
 
 The `sampleinfo` file contains basic information about the samples that we will need for the analysis. See below.
 
-![sampleinfo file](../../images/rna-seq-counts-to-genes/sampleinfo.png "Sample information file (before formatting)")
+![sampleinfo file](https://github.com/JuliaScheel/random/blob/main/images/sampleinfo.PNG "Sample information file (before formatting)")
 
 ## Format the data
 
-Let’s create a new file, `countdata`, that contains only the counts for the 12 samples i.e. we'll remove the gene length column with the **Cut columns from a table (cut)** tool. The sample names are also pretty long so we'll use the **Replace Text in entire line** tool to shorten these to contain only the relevant information about each sample. We will also replace the hyphen in the sample names with a dot so they match the names in the sample information file.
+> ### Hands-on: Format the counts data
+> Rename file as `countdata` using the **pencil** icon. 
 
-> ### {% icon hands_on %} Hands-on: Format the counts data
+Next, let's create a new file, `factordata`, that contains the groups information that we need for the limma-voom tool. We'll combine the cell type and infection status to make 78 groups e.g. we'll combine the CellType `NHBE` with the Status `mock`. We'll use the **Merge Columns** tool to combine the cell type and mouse status columns in the sample information file, making a column with the 6 group names.
+
+> ### Hands-on: Format the sample information file
 >
-> 1. **Cut columns from a table (cut)** {% icon tool %} with the following parameters:
->      - {% icon param-file %} *"File to cut"*: `seqdata`
->      - {% icon param-select %} *"Operation"*: `Discard`
->      - {% icon param-select %} *"List of fields"*: Select `Column:2`
-> 2. **Replace Text in entire line** {% icon tool %} with the following parameters:
->      - {% icon param-file %} *"File to process"*: output of **Cut** {% icon tool %}
->      - {% icon param-text %} *"Find pattern"*: `_B[A-Z0-9_]+`
-> 3. **Replace Text in entire line** {% icon tool %} with the following parameters:
->      - {% icon param-file %} *"File to process"*: output of **Replace Text** {% icon tool %}
->      - {% icon param-text %} *"Find pattern"*: `-`
->      - {% icon param-text %} *"Replace with"*: `.`
-> 4. Rename file as `countdata` using the {% icon galaxy-pencil %} (pencil) icon. The file should look like below.
->    ![countdata file](../../images/rna-seq-counts-to-genes/countdata.png "Count file (after formatting)")
-{: .hands_on}
-
-Next, let's create a new file, `factordata`, that contains the groups information that we need for the limma-voom tool. We'll combine the cell type and mouse status to make 6 groups e.g. we'll combine the CellType `basal` with the Status `pregnant` for the group `basalpregnant`. We'll use the **Merge Columns** tool to combine the cell type and mouse status columns in the sample information file, making a column with the 6 group names.
-
-> ### {% icon hands_on %} Hands-on: Format the sample information file
->
-> 1. **Merge Columns together** {% icon tool %} with the following parameters:
->      - {% icon param-file %} *"Select data"*: `sampleinfo`
->      - {% icon param-select %} *"Merge column"*: `Column: 3`
->      - {% icon param-select %} *"with column"*: `Column: 4`
-> 2. **Cut columns from a table (cut)** {% icon tool %} with the following parameters:
->      - {% icon param-file %} *"File to cut"*: output of **Merge Columns** {% icon tool %}
->      - {% icon param-select %} *"Operation"*: `Keep`
->      - {% icon param-select %} *"List of fields"*: Select `Column:2` and `Column:5`
-> 3. Rename file as `factordata` using the {% icon galaxy-pencil %} (pencil) icon. The file should look like below.
->    ![factordata file](../../images/rna-seq-counts-to-genes/factordata.png "Sample information file (after formatting)")
-{: .hands_on}
-
-## Get gene annotations
-
-Optionally, gene annotations can be provided to the limma-voom tool and if provided the annotation will be available in the output files. We'll get gene symbols and descriptions for these genes using the Galaxy **annotateMyIDs** tool, which provides annotations for human, mouse, fruitfly and zebrafish.
-
-> ### {% icon hands_on %} Hands-on: Get gene annotations
->
-> 1. **annotateMyIDs** {% icon tool %} with the following parameters:
->      - {% icon param-file %} *"File with IDs"*: `countdata`
->      - {% icon param-check %} *"File has header"*: `Yes`
->      - {% icon param-select %} *"Organism"*: `Mouse`
->      - {% icon param-select %} *"ID Type"*: `Entrez`
->      - {% icon param-check %} "*Output columns"*: tick
->          - `ENTREZID`
->          - `SYMBOL`
->          - `GENENAME`
-> 2. Rename file as `annodata` using the {% icon galaxy-pencil %} (pencil) icon. The file should look like below.
->    ![annodata file](../../images/rna-seq-counts-to-genes/annodata.png "Gene annotation file")
-> 3. There must be the same number of lines (rows) in the counts and annotation. Check the number of lines shown on the datasets in the history, there should be 27,180 lines in both.
+> 1. **Merge Columns together** with the following parameters:
+>      -  *"Select data"*: `sampleinfo`
+>      -  *"Merge column"*: `Column: 3`
+>      -  *"with column"*: `Column: 4`
+> 2. **Cut columns from a table (cut)**  with the following parameters:
+>      -  *"File to cut"*: output of **Merge Columns** 
+>      -  *"Operation"*: `Keep`
+>      -  *"List of fields"*: Select `Column:1` and `Column:5`
+> 3. Rename file as `factordata` using the **pencil** icon. The file should look like below.
+>    ![factordata file](https://github.com/JuliaScheel/random/blob/main/images/factordata.PNG "Sample information file (after formatting)")
 {: .hands_on}
 
 # Differential expression with limma-voom
@@ -148,37 +112,34 @@ It is recommended to filter for lowly expressed genes when running the limma-voo
 
 There are a few ways to filter out lowly expressed genes. When there are biological replicates in each group, in this case we have a sample size of 2 in each group, we favour filtering on a minimum counts-per-million (CPM) threshold present in at least 2 samples. Two represents the smallest sample size for each group in our experiment. In this dataset, we choose to retain genes if they are expressed at a CPM above 0.5 in at least two samples. The CPM threshold selected can be compared to the raw count with the CpmPlots (see below).
 
-> ### {% icon details %} More details on filtering
+> ### More details on filtering
 >
 > The limma tool uses the `cpm` function from the edgeR package [Robinson, McCarthy, and Smyth 2010](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2796818/) to generate the CPM values which can then be filtered. Note that by converting to CPMs we are normalizing for the different sequencing depths for each sample. A CPM of 0.5 is used as it corresponds to a count of 10-15 for the library sizes in this data set. If the count is any smaller, it is considered to be very low, indicating that the associated gene is not expressed in that sample. A requirement for expression in two or more libraries is used as each group contains two replicates. This ensures that a gene will be retained if it is only expressed in one group. Smaller CPM thresholds are usually appropriate for larger libraries. As a general rule, a good threshold can be chosen by identifying the CPM that corresponds to a count of 10, which in this case is about 0.5. You should filter with CPMs rather than filtering on the counts directly, as the latter does not account for differences in library sizes between samples.
 {: .details}
 
 ## Normalization for composition bias
 
-In an RNA-seq analysis, the counts are normalized for different sequencing depths between samples. Normalizing to eliminate composition biases between samples is also typically performed. Composition biases can occur, for example, if there are a few highly expressed genes dominating in some samples, leading to less reads from other genes. By default, TMM normalization [(Robinson and Oshlack 2010)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2864565/) is performed by the limma tool using the edgeR `calcNormFactors` function (this can be changed under **Advanced Options**). TMM stands for Trimmed Mean of M values, where a weighted trimmed mean of the log expression ratios is used to scale the counts for the samples. See the figure from the TMM paper below. Note the plot (Figure 1c) that shows how a few highly expressed genes in the liver sample (where the arrow is) results in the majority of other genes in the sample having the appearance of being expressed lower in liver. The mid-line through the points is offset from the expected zero and the TMM normalization factor (red line) scales the counts to adjust for this.
-
-![TMM normalization](../../images/rna-seq-counts-to-genes/TMM.png "TMM normalization (Robinson and Oshlack 2010)")
+In an RNA-seq analysis, the counts are normalized for different sequencing depths between samples. Normalizing to eliminate composition biases between samples is also typically performed. Composition biases can occur, for example, if there are a few highly expressed genes dominating in some samples, leading to less reads from other genes. By default, TMM normalization [(Robinson and Oshlack 2010)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2864565/) is performed by the limma tool using the edgeR `calcNormFactors` function (this can be changed under **Advanced Options**). 
 
 ## Specify Contrast(s) of interest
 
 Since we are interested in differences between groups, we need to specify which comparisons we want to test. For example, if we are interested in knowing which genes are differentially expressed between the pregnant and lactating group in the basal cells we specify `basalpregnant-basallactate` for the *Contrast of Interest*. Note that the group names in the contrast must exactly match the names of the groups in the `factordata` file. More than one contrast can be specified using the `Insert Contrast` button, so we could look at more comparisons of the groups here, but first we'll take a look at `basalpregnant-basallactate`.
 
-> ### {% icon hands_on %} Hands-on: Differential expression with limma-voom
+> ### Hands-on: Differential expression with limma-voom
 >
-> 1. **limma** {% icon tool %} with the following parameters:
->      - {% icon param-file %} *"Differential Expression Method"*: `limma-voom`
->      - {% icon param-select %} *"Count Files or Matrix?*": `Single Count Matrix`
->          - {% icon param-file %} *"Count Matrix"*: Select `countdata`
->      - {% icon param-select %} *"Input factor information from file?"*: `Yes`
->          - {% icon param-file %} *"Factor File"*: Select `factordata`
->      - {% icon param-select %} *"Use Gene Annotations?"*: `Yes`
->          - {% icon param-file %} *"Factor File"*: Select `annodata`
->      - {% icon param-text %} *"Contrast of Interest"*: `basalpregnant-basallactate`
->      - {% icon param-select %} *"Filter lowly expressed genes?"*: `Yes`
->          - {% icon param-select %} *"Filter on CPM or Count values?"*: `CPM`
->          - {% icon param-text %} *"Minimum CPM"*: `0.5`
->          - {% icon param-text %} *"Minimum Samples"*: `2`
-> 2. Inspect the `Report` produced by clicking on the {% icon galaxy-eye %} (eye) icon
+> 1. **limma** with the following parameters:
+>      -  *"Differential Expression Method"*: `limma-voom`
+>      -  *"Count Files or Matrix?*": `Single Count Matrix`
+>          -  *"Count Matrix"*: Select `countdata`
+>      -  *"Input factor information from file?"*: `Yes`
+>          -  *"Factor File"*: Select `factordata`
+>      -  *"Use Gene Annotations?"*: `No`
+>      -  *"Contrast of Interest"*: `NHBEmock-NHBECovid`
+>      -  *"Filter lowly expressed genes?"*: `Yes`
+>          -  *"Filter on CPM or Count values?"*: `CPM`
+>          -  *"Minimum CPM"*: `0.5`
+>          -  *"Minimum Samples"*: `2`
+> 2. Inspect the `Report` produced by clicking on the **eye** icon
 {: .hands_on}
 
 # QC of count data
