@@ -43,8 +43,6 @@ We will use **limma-voom** for identifying differentially expressed genes here. 
 
 This is a Galaxy tutorial based on material from the [RNA counts to genes tutorial](https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-counts-to-genes/tutorial.html)
 
-![Tutorial Dataset](../../images/rna-seq-reads-to-counts/mouse_exp.png "Tutorial Dataset")
-
 
 # Preparing the inputs
 
@@ -59,33 +57,21 @@ We will use two files for this analysis:
 >
 > 1. Create a new history for this RNA-seq exercise e.g. `RNA-seq count to genes with limma`
 >
->    {% include snippets/create_new_history.md %}
->    {% include snippets/rename_history.md %}
+>    * Click the **+** icon at the top of the history panel
 >
-> 2. Import the mammary gland counts table and the associated sample information file.
+> 2. Import the human Covid19 counts table and the associated sample information file.
 >
->     To import the files, there are two options:
->     - Option 1: From a shared data library if available (ask your instructor)
->     - Option 2: From [Figshare](https://figshare.com/s/1d788fd384d33e913a2a)
->
->     {% include snippets/import_via_link.md %}
->
->     - You can paste both links below into the **Paste/Fetch** box:
+>     To import the files:
+>     - From [GEO](https://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147507/suppl/GSE147507_RawReadCounts_Human.tsv.gz)
+>     - You can paste the link below into the **Paste/Fetch** box:
 >
 >     ```
->     https://ndownloader.figshare.com/files/5057929?private_link=1d788fd384d33e913a2a
->     https://ndownloader.figshare.com/files/5999829?private_link=1d788fd384d33e913a2a
+>     https://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147507/suppl/GSE147507_RawReadCounts_Human.tsv.gz
 >     ```
 >
->     - Select *"Genome"*: `mm10`
->
-> 2. Rename the counts dataset as `seqdata` and the sample information dataset as `sampleinfo` using the {% icon galaxy-pencil %} (pencil) icon.
+> 2. Rename the counts dataset as `seqdata` and the sample information dataset as `sampleinfo` using the **pencil** icon.
 > 3. Check that the datatype is `tabular`.
 >    If the datatype is not `tabular`, please change the file type to `tabular`.
->
->
->    {% include snippets/change_datatype.md datatype="tabular" %}
->
 {: .hands_on}
 
 
