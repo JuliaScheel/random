@@ -38,11 +38,11 @@ The data for this tutorial comes from a Nature Cell Biology paper, [SARS-CoV-2 l
 
 This study examined the expression profiles of  the host response to SARS-CoV-2 as it compares to other respiratory infections. Cell models of SARS-CoV-2 infection and ranscriptional profiling of a COVID-19 lung biopsy are available.
 
-78 groups are present, with one for each combination of cell type and infection status. In this tutorial we will use the GEO counts file as a starting point for our analysis. Alternatively, you could create a count matrix from the raw sequence reads, as demonstrated in the [RNA-seq reads to counts tutorial]({% link topics/transcriptomics/tutorials/rna-seq-reads-to-counts/tutorial.md %}).
+78 groups are present, with one for each combination of cell type and infection status. In this tutorial we will use the GEO counts file as a starting point for our analysis. Alternatively, you could create a count matrix from the raw sequence reads, as demonstrated in the [RNA-seq reads to counts tutorial]({% link topics/transcriptomics/tutorials/rna-seq-reads-to-counts/tutorial.md %}). The 'sampleinfo.tsv' was created based on the design overview of said dataset.
 
 We will use **limma-voom** for identifying differentially expressed genes here. Other popular alternatives are edgeR and DESeq2. Limma-voom has been shown to be perform well in terms of precision, accuracy and sensitivity ([Costa-Silva, Domingues and Lopes 2017](https://www.ncbi.nlm.nih.gov/pubmed/29267363)) and, due to its speed, it's particularly recommended for large-scale datasets with 100s of samples ([Chen, Lun, Smyth 2016](https://f1000research.com/articles/5-1438/v2)).
 
-This is a Galaxy tutorial based on material from the [RNA counts to genes tutorial](https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-counts-to-genes/tutorial.html)
+This is a Galaxy step-by-step based on material from the [RNA counts to genes tutorial](https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-counts-to-genes/tutorial.html)
 
 
 # Preparing the inputs
@@ -169,6 +169,5 @@ We have converted a count file into differentially expressed genes with limma-vo
 
 # To be extended
 * naming conventions
-* details on how sampleinfo.tsv was created
 * QT
 * DE for further use in Wikipathways (presumeably the "resultnormalised.tsv"
