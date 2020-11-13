@@ -5,7 +5,8 @@
 **RNA-seq counts to genes for follow up in Minerva**
 
 GEO: "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147507/suppl/GSE147507_RawReadCounts_Human.tsv.gz"
-The Galaxy history can be found [here](https://usegalaxy.eu/u/jscheel1/h/gse147507-to-de-limma)
+
+The Galaxy history can be found [here](https://usegalaxy.eu/u/jscheel1/h/gse147507-to-de-limma "limma") and [here](https://usegalaxy.eu/u/jscheel1/h/gse147507-to-de-limma-voom "limma-voom")
 
 tags:
   - limma-voom
