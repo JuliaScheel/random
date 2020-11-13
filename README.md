@@ -2,19 +2,22 @@
 
 ---
 layout: tutorial_hands_on
-title: RNA-seq counts to genes for follow up in Minerva 
+title: **RNA-seq counts to genes for follow up in Minerva**
 GEO: "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147507/suppl/GSE147507_RawReadCounts_Human.tsv.gz"
 tags:
   - limma-voom
   - human
   - Covid19
+  
 questions:
   - "What are the differentially expressed genes in mock infected epithelial cells vs Covid19 infected epithelial cells?"
   - "How to analyze RNA count data using limma-voom?"
+  
 objectives:
   - "Analysis of RNA-seq count data using limma-voom"
   - "Visualisation and interactive exploration of count data"
   - "Identification of differentially expressed genes"
+  
 key_points:
   - "The limma-voom tool can be used to perform differential expression and output useful plots"
 Based on: [RNA counts to genes tutorial](https://training.galaxyproject.org/training-material/topics/transcriptomics/tutorials/rna-seq-counts-to-genes/tutorial.html)
