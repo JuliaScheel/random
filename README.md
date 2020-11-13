@@ -29,7 +29,6 @@ Based on: [RNA counts to genes tutorial](https://training.galaxyproject.org/trai
 
 
 # Introduction
-{:.no_toc}
 The Covid dataset was integrated as part of BioHackEU20 as part of a workflow to integrate Covid19 data to a gene expression that can be visualized in Minerva and Wikpathways.
 
 **human Covid19 data set**
@@ -47,31 +46,18 @@ This is a Galaxy tutorial based on material from the [RNA counts to genes tutori
 ![Tutorial Dataset](../../images/rna-seq-reads-to-counts/mouse_exp.png "Tutorial Dataset")
 
 
-> ### Agenda
->
-> In this tutorial, we will deal with:
->
-> 1. TOC
-> {:toc}
->
-{: .agenda}
-
-
-{% include snippets/warning_results_may_vary.md %}
-
 # Preparing the inputs
 
-We will use three files for this analysis:
+We will use two files for this analysis:
 
  * **Count matrix** (genes in rows, samples in columns)
  * **Sample information** file (sample id, group)
- * **Gene annotation** file (gene id, symbol, description)
 
 ## Import data
 
-> ### {% icon hands_on %} Hands-on: Data upload
+> ### Hands-on: Data upload
 >
-> 1. Create a new history for this RNA-seq exercise e.g. `RNA-seq with limma-voom`
+> 1. Create a new history for this RNA-seq exercise e.g. `RNA-seq count to genes with limma`
 >
 >    {% include snippets/create_new_history.md %}
 >    {% include snippets/rename_history.md %}
