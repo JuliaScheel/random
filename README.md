@@ -31,13 +31,13 @@ Based on: [RNA counts to genes tutorial](https://training.galaxyproject.org/trai
 # Introduction
 The Covid dataset was integrated as part of BioHackEU20 as part of a workflow to integrate Covid19 data to a gene expression that can be visualized in Minerva and Wikpathways.
 
-**human Covid19 data set**
+**Human Covid19 data set**
 
 The data for this tutorial comes from a Nature Cell Biology paper, [SARS-CoV-2 launches a unique transcriptional signature from in vitro, ex vivo, and in vivo systems](https://www.biorxiv.org/content/10.1101/2020.03.24.004655v1)), Blanco-Melo et al. 2020. The processed RNA-seq data (counts) can be downloaded from Gene Expression Omnibus database (GEO) under accession number [GSE147507](http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE147507).
 
 This study examined the expression profiles of  the host response to SARS-CoV-2 as it compares to other respiratory infections. Cell models of SARS-CoV-2 infection and ranscriptional profiling of a COVID-19 lung biopsy are available.
 
-Six groups are present, with one for each combination of cell type and infection status. In this tutorial we will use the GEO counts file as a starting point for our analysis. Alternatively, you could create a count matrix from the raw sequence reads, as demonstrated in the [RNA-seq reads to counts tutorial]({% link topics/transcriptomics/tutorials/rna-seq-reads-to-counts/tutorial.md %}).
+78 groups are present, with one for each combination of cell type and infection status. In this tutorial we will use the GEO counts file as a starting point for our analysis. Alternatively, you could create a count matrix from the raw sequence reads, as demonstrated in the [RNA-seq reads to counts tutorial]({% link topics/transcriptomics/tutorials/rna-seq-reads-to-counts/tutorial.md %}).
 
 We will use **limma-voom** for identifying differentially expressed genes here. Other popular alternatives are edgeR and DESeq2. Limma-voom has been shown to be perform well in terms of precision, accuracy and sensitivity ([Costa-Silva, Domingues and Lopes 2017](https://www.ncbi.nlm.nih.gov/pubmed/29267363)) and, due to its speed, it's particularly recommended for large-scale datasets with 100s of samples ([Chen, Lun, Smyth 2016](https://f1000research.com/articles/5-1438/v2)).
 
@@ -75,9 +75,9 @@ We will use two files for this analysis:
 {: .hands_on}
 
 
-Let’s take a look at the data. The `seqdata` file contains information about genes (one gene per row), the first column has the Entrez gene id, the second has the gene length and the remaining columns contain information about the number of reads aligning to the gene in each experimental sample. There are two replicates for each cell type and time point (detailed sample info can be found in file “GSE60450_series_matrix.txt” from the GEO website). The first few rows and columns of the seqdata file are shown below.
+Let’s take a look at the data. The `seqdata` file contains information about genes (one gene per row), the first column has the Entrez gene id, the second has the gene length and the remaining columns contain information about the number of reads aligning to the gene in each experimental sample. There are two replicates for each cell type and time point (detailed sample info can be foun in GEO Accession viewer under "Overall design"). The first few rows and columns of the seqdata file are shown below.
 
-![seqdata file](../../images/rna-seq-counts-to-genes/seqdata.png "Count file (before formatting)")
+![seqdata file](../../images/countdata.png "Count file (before formatting)")
 
 The `sampleinfo` file contains basic information about the samples that we will need for the analysis. See below.
 
