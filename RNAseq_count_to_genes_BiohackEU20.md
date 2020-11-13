@@ -167,3 +167,8 @@ Click on the 'limma-voom_NHBEmock-NHBECovid.tsv' to download the results and upl
 
 We have converted a count file into differentially expressed genes with limma-voom, which can then be visualized in Minerva.
 
+# To be extended
+* naming conventions
+* details on how sampleinfo.tsv was created
+* QT
+* DE for further use in Wikipathways (presumeably the "resultnormalised.tsv"
