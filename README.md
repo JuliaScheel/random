@@ -2,8 +2,11 @@
 
 ---
 layout: tutorial_hands_on
+
 title: **RNA-seq counts to genes for follow up in Minerva**
+
 GEO: "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE147nnn/GSE147507/suppl/GSE147507_RawReadCounts_Human.tsv.gz"
+
 tags:
   - limma-voom
   - human
