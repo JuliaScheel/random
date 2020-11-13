@@ -77,7 +77,7 @@ We will use two files for this analysis:
 
 Let’s take a look at the data. The `seqdata` file contains information about genes (one gene per row), the first column has the Entrez gene id, the second has the gene length and the remaining columns contain information about the number of reads aligning to the gene in each experimental sample. There are two replicates for each cell type and time point (detailed sample info can be foun in GEO Accession viewer under "Overall design"). The first few rows and columns of the seqdata file are shown below.
 
-![seqdata file](../images/countdata.PNG "Count file (before formatting)")
+![seqdata file](https://github.com/JuliaScheel/random/blob/main/images/countdata.PNG "Count file (before formatting)")
 
 The `sampleinfo` file contains basic information about the samples that we will need for the analysis. See below.
 
